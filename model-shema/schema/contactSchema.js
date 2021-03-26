@@ -5,7 +5,7 @@ const { Schema, model } = mongoose;
 const contactSchema = new Schema({
   name: {
     type: String,
-    required: [true, 'Name is required'],
+   required: [true, 'Name is required'],
     minlength: 2,
     maxlength: 50,
   },
@@ -41,6 +41,6 @@ const contactSchema = new Schema({
   },   
 })
 
-const Contact = new model('contacts', contactSchema);
+const Contact = model('contacts', contactSchema);
 
 module.exports = Contact;

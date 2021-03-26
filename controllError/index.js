@@ -6,8 +6,8 @@ const {listContact,
     
 const get = async (req, res, next) => {
     try {
-        const contacts = await listContacts();
-        console.log('contacts', contacts)
+        const contacts = await listContact();
+        console.log('contacts', contacts);
         res.json({
             status: 'success',
             code: 200,
@@ -21,29 +21,26 @@ const get = async (req, res, next) => {
 };
 
 const getById = async (req, res, next) => {
-    try {
-        const contact = await getContactById(req.params.contactId)
-        if (contact) {
-            res.json({
-                status: 'success',
-                code: 200,
-                data: {
-                    contact,
-                }
-            })
-        }
-        else {
-            res.status(404).json({
-                status: 'Error',
-                code: 404,
-                message: "Not found",
-            })
-        }
+  try {
+    const contact = await getContactById(req.params.contactId);
+    if (contact) {
+      res.json({
+        status: 'success',
+        code: 200,
+        data: {
+          contact,
+        },
+      });
+    } else {
+      res.status(404).json({
+        status: 'Error',
+        code: 404,
+        message: 'Not found',
+      });
     }
-    catch (error) {
-        next(error)
-    }
-
+  } catch (error) {
+    next(error);
+  }
 };
 
 const add = async (req, res, next) => {
