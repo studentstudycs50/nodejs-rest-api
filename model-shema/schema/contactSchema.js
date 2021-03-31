@@ -39,7 +39,9 @@ const contactSchema = new Schema({
     type: String,
     default: '',
   },   
-})
+},
+ { versionKey: false, timestamps: true } // проверяем время добавления
+)
 
 const Contact = model('contacts', contactSchema);
 

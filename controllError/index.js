@@ -1,23 +1,19 @@
-const {listContact,
-    addContact,
-    getContactById,
-    removeContact,
-    updateContact } = require('../model-shema/index')
+const { listContacts, getContactById, removeContact, addContact, updateContact } = require('../model-shema/index')
     
 const get = async (req, res, next) => {
-    try {
-        const contacts = await listContact();
-        console.log('contacts', contacts);
-        res.json({
-            status: 'success',
-            code: 200,
-            data: {
-                contacts,
-            },
-        });
-    } catch (error) {
-        next(error)
-    }
+  try {
+    const contacts = await listContacts();
+    console.log('contacts', contacts);
+    res.json({
+      status: 'success',
+      code: 200,
+      data: {
+        contacts,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 const getById = async (req, res, next) => {
@@ -83,52 +79,51 @@ const add = async (req, res, next) => {
 
 const remove = async (req, res, next) => {
   try {
-    const contact = await removeContact(req.params.contactId)
+    const contact = await removeContact(req.params.contactId);
     if (contact) {
       res.json({
         status: 'success',
         code: 200,
         message: 'contact deleted',
-        data: contact
-      })
+        data: contact,
+      });
     } else {
       res.status(404).json({
         status: 'Error',
         code: 404,
-        message: 'Not found'
-      })
+        message: 'Not found',
+      });
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
 const update = async (req, res, next) => {
   try {
     if (!req.body) {
-      res.status(400).json({ message: 'missing fields' })
-    }
-    else {
-      const data = await updateContact(req.params.contactId, req.body)
+      res.status(400).json({
+        message: 'missing fields',
+      });
+    } else {
+      const data = await updateContact(req.params.contactId, req.body);
       if (data) {
         res.json({
           status: 'success',
           code: 200,
           data,
-        })
-      }
-      else {
-        res.status(400).json({
+        });
+      } else {
+        res.status(404).json({
           status: 'Error',
           code: 404,
-          message: 'Not found'
-        })
+          message: 'Not found',
+        });
       }
     }
+  } catch (error) {
+    next(error);
   }
-  catch (error) {
-    next(error)
-  }
-}
+};
 
-module.exports = {get, getById, add, remove, update}
+module.exports = { get, getById, add, remove, update };
