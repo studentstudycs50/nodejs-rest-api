@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
-const { Schema, model } = mongoose;
+const { Schema, model, SchemaTypes } = mongoose;
+
+const {Subscription} = require('../../helpers/constants')
 
 const contactSchema = new Schema({
   name: {
     type: String,
-   required: [true, 'Name is required'],
+    required: [true, 'Name is required'],
     minlength: 2,
     maxlength: 50,
   },
@@ -26,7 +29,7 @@ const contactSchema = new Schema({
     required: [true, 'Subscription is required'],
     minlength: 3,
     maxlength: 15,
-    enum: ['free', 'pro', 'premium'],
+    enum: { values: [Subscription.FREE, Subscription.PRO, Subscription.PREMIUM], message: 'Invalid type of subscription' },
     default: 'free',
   },
   password: {
@@ -38,10 +41,16 @@ const contactSchema = new Schema({
   token: {
     type: String,
     default: '',
-  },   
+  },
+  owner: {
+    type: SchemaTypes.ObjectId,
+    ref: 'user',
+    required: true,
+  },
 },
  { versionKey: false, timestamps: true } // проверяем время добавления
 )
+contactSchema.plugin(mongoosePaginate);
 
 const Contact = model('contacts', contactSchema);
 
