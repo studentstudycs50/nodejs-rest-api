@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const SALT_FACTOR = 8;
-
 const { Schema, model } = mongoose;
 
 const { Subscription } = require('../../helpers/constants');
@@ -28,6 +27,7 @@ const userSchema = new Schema({
     default: 'free',
   },
   token: String,
+  avatarURL: String,
 });
 
 userSchema.pre('save', async function (next) {

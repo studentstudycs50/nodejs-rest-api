@@ -10,8 +10,8 @@ const findUserById = async id => {
   return user;
 };
 
-const createNewUser = async ({ email, password, subscription, token }) => {
-  const user = await new User({ email, password, subscription, token }).save();
+const createNewUser = async ({ email, password, subscription, token, avatarURL }) => {
+  const user = await new User({ email, password, subscription, token, avatarURL }).save();
   return user;
 };
 
@@ -21,6 +21,11 @@ const updateToken = async (id, token) => {
 
 const patchSub = async (id, sub) => {
   const user = await User.findByIdAndUpdate(id, { subscription: sub }, { new: true });
+  return user;  
+};
+
+const patchAvatar = async (id, avatar) => {
+  const user = await User.findByIdAndUpdate(id, { avatarURL: avatar }, { new: true });
   return user;
 };
 
@@ -30,4 +35,5 @@ module.exports = {
   createNewUser,
   updateToken,
   patchSub,
+  patchAvatar,
 };
