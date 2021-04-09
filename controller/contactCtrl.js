@@ -1,14 +1,13 @@
-const { listContacts, getContactById, removeContact, addContact, updateContact } = require('../model-shema/index')
+const { listContacts, getContactById, removeContact, addContact, updateContact } = require('../model-shema/contacts')
     
 const get = async (req, res, next) => {
   try {
-    const contacts = await listContacts();
-    console.log('contacts', contacts);
+    const contacts = await listContacts(req.user.id, req.query);
     res.json({
       status: 'success',
       code: 200,
       data: {
-        contacts,
+        ...contacts,
       },
     });
   } catch (error) {
@@ -63,7 +62,7 @@ const add = async (req, res, next) => {
                 },
             })
         } else {
-            const contact = await addContact(req.body)
+            const contact = await addContact({...req.body, owner: req.user.id })
             return res.status(201).json({
                 status: 'success',
                 code: 201,
