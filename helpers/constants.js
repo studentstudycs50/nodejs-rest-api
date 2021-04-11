@@ -4,6 +4,6 @@ const Subscription = {
   PREMIUM: 'premium',
 };
 
-module.exports = {
+module.exports = { 
   Subscription,
 };
