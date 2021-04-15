@@ -29,6 +29,16 @@ const patchAvatar = async (id, avatar) => {
   return user;
 };
 
+const findByVerifyToken = async verifyToken => {
+  const user = await User.findOne({ verifyToken });
+  return user;
+};
+
+const updateVerifyToken = async (id, verify, verifyToken) => {
+  const user = await User.findByIdAndUpdate(id, { verify, verifyToken });
+  return user;
+};
+
 module.exports = {
   findUserByEmail,
   findUserById,
@@ -36,4 +46,6 @@ module.exports = {
   updateToken,
   patchSub,
   patchAvatar,
+  findByVerifyToken,
+  updateVerifyToken,
 };
